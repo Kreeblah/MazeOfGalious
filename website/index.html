@@ -1,0 +1,404 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Maze of Galious</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="remake, maze of galious, knightmare, mog, msx, brain games" />
+	<meta name="description" content="Welcome to the remake of Maze of Galious (MoG) remake" />
+	<link href="style-min.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+
+<body>
+<div id="webring">
+	<ul class="topnav">
+		<li><a href="http://goonies.jorito.net/">Goonies remake</a></li>
+		<li><a href="http://mog.jorito.net/">Maze of Galious remake</a></li>
+		<li><a href="http://f1spirit.jorito.net/">F-1 Spirit remake</a></li>
+		<li><a href="http://roadfighter.jorito.net/">Roadfighter remake</a></li>
+		<li><a href="http://www2.braingames.getput.com/transballgl/default.asp">Transball GL</a></li>
+		<li><a href="http://www2.braingames.getput.com/stransball2/default.asp">Super Transball 2</a></li>
+		<li><a href="http://www2.braingames.getput.com/nether/default.asp">Nether Earth remake</a></li>
+		<li><a href="http://www2.braingames.getput.com/forum/">Brain Games forums</a></li>
+	</ul>
+</div>
+
+<div id="logo">
+	<img src="pics/logo.png" alt="logo" />
+</div>
+
+<div id="menu">
+	<ul>
+		<li id="navhome" class="selected"><a href="javascript:show('home');">Home</a></li>
+		<li id="navstory"><a href="javascript:show('story');">Story</a></li>
+		<li id="navscreens"><a href="javascript:show('screens');">Screenshots</a></li>
+		
+		<li id="navdownload"><a href="javascript:show('download');">Download</a></li>
+		<li id="navhowtoplay"><a href="javascript:show('howtoplay');">How to play</a></li>
+		<li id="navpasswords"><a href="javascript:show('passwords');">Passwords</a></li>
+		<li id="navcredits"><a href="javascript:show('credits');">Credits</a></li>
+	</ul>
+</div>
+
+<div id="home">
+	<h1>Home</h1>
+	<p>
+		<a href="http://www.generation-msx.nl/msxdb/softwareinfo/916">The Maze of Galious</a> (MoG in short) was originally a Konami game for the MSX computer system. Its real name is <em>Knightmare II: The Maze of Galious</em> and is the sequel of another Konami game called <a href="http://www.generation-msx.nl/msxdb/softwareinfo/855">Knightmare</a>.
+	</p>
+	<p>
+		MoG is a very addictive game where you have to kill thousands of enemies, collect items in order to obtain new powers and defeat some really great demons at the end of each level. The gameplay of MoG is not the boring linear one. In MoG you are free to go everywhere you want from the beginning of the game. You have to be very careful of the order in which you visit all the rooms in the HUGE map if you want to keep your character alive. The map is structured in a main map (called the <em>castle</em>) and 10 submaps (called the <em>worlds</em>). Initially you are in the castle and you have to find the keys that open the doors to go to each of the worlds. To complete the game you have to defeat the boss at the end of each one of the 10 worlds. You are free to revisit each world as often as you want in order to see if you have missed something. To defeat all 10 demons you control two characters: <em>Popolon</em> and <em>Aphrodite</em>. Each one has special abilities, i.e. Popolon has a greater ability to jump and Aphrodite is able to dive. 
+	</p>
+	
+	<h2>Forums and support</h2>
+	<p>If you have any problems, questions or suggestions about Maze of Galious, feel free to join us at the <a href="http://www.braingames.getput.com/forum/">Braingames forums</a>, or even better, at the <a href="http://www.braingames.getput.com/forum/forum_topics.asp?FID=7">Maze of Galious forum</a>. The forum is the place where you can find the latest developments, send us your contributions, send us fanmail or for just a friendly chat. You're welcome to join us!</p> 
+	
+	<h1>News</h1>
+	
+	<h3>15-03-2009</h3>
+	<p>There are updated binaries available for Ubuntu/Debian now.</p>
+	
+	<h3>01-12-2008</h3>
+	<p>Just two small updates:</p>
+	<ul>
+	   <li>Applied the patch to support the weird passwords from the original, kindly provided by <a href="http://www2.braingames.getput.com/forum/forum_posts.asp?TID=485&amp;PN=1&amp;TPN=2">Gamut</a> on our forums</li>
+        <li>The Mac version is available as Universal Binary again, so it runs on both PPC and Intel Macs</li>
+    </ul>
+	     
+	<h3>17-04-2008</h3>
+	<p>Some small updates this time:</p>
+	<ul>
+		<li>Added new password generator (v0.21) with load/save option. By Lars18th.</li>
+		<li>More musics and sound effects were added to the Jorito sound set</li>
+		<li>We're back to using SDL_sound again, so musics should loop properly again</li>
+		<li>And some minor code/text fixes</li>
+	</ul>
+	
+	<h3>10-03-2008</h3>
+	<p>
+		After a long period of silence we did some work on the Maze of Galious remake again. The most visible result of that is this new website. Also some other long overdue work has finally been taken care of. In a short list, here's what's new:
+	</p>
+	<ul>
+		<li>New website</li>
+		<li>Binary downloads for both Mac OSX and Ubuntu Linux</li>
+		<li>A much improved version of the <em>Jorito</em> sound set with improved music and new sound effects</li>
+		<li>Tweaked remake so it needs less CPU power</li>
+	</ul>
+	
+</div>
+
+<div id="story">
+	<h1>Story</h1>
+	<p>
+		This is a legend that has been told since long, long ago...
+	</p>
+	<p>
+		In order to save Aphrodite, the princess of Greek, who was kidnapped by the dark overlord Hudnos, the good knight Popolon set out for the dark castle located in the depths of Mount Atlas. However, it actually was a trap set by the evil high priest Galious. He used evil spirits to do his bidding and was well versed in black arts. He sold his own soul to the devil and was the very incarnation of evil. In Popolon's absence, Galious invaded the kingdom of Greek along with his demons and made the kingdom his base for his plans to turn the world into a realm of darkness. The true dark castle was Castle Greek itself! Galious then went to heaven and kidnapped the yet unborn Pampas, who was to be born to Popolon and Aphrodite and shut the baby away in the castle.
+	</p>
+	<p>
+		After rescuing Aphrodite, Popolon returned to Castle Greek. He sensed a strange presence about the castle and soon derived what had happened. In order to take back Castle Greek and rescue their future child from the hands of the dark powers, the two entered the gates of the castle knowing that this could cost them their lives.
+	</p>
+	<p>
+		The stage is now set for the true climax to <em>'The Demon Legend'</em>...
+	</p>
+</div>
+
+<div id="screens">
+	<h1>Screenshots</h1>
+	<p>
+		Here you can see some screenshots of the game. As you can see, the game features different graphic sets. You can choose from these at will.
+	</p>
+	<div id="zoom">
+		<a onclick="javascript:unzoom('zoom');" onmouseout="javascript:unzoom('zoom');"><img id="closeup" src="pics/1pixel.gif" alt="zoom" /></a>
+	</div>
+	<h2>Naramura graphic set</h2>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot1.jpg')"><img src="pics/thumb_screenshot1.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot2.png')"><img src="pics/thumb_screenshot2.png" alt="screenshot" /></a>
+	</p>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot3.png')"><img src="pics/thumb_screenshot3.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot4.jpg')"><img src="pics/thumb_screenshot4.png" alt="screenshot" /></a>
+	</p>
+
+	<h2>Hinox graphic set</h2>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot9.jpg')"><img src="pics/thumb_screenshot9.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot10.jpg')"><img src="pics/thumb_screenshot10.png" alt="screenshot" /></a>
+	</p>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot11.jpg')"><img src="pics/thumb_screenshot11.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot12.jpg')"><img src="pics/thumb_screenshot12.png" alt="screenshot" /></a>
+	</p>
+
+	<h2>Boltian graphic set</h2>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot13.jpg')"><img src="pics/thumb_screenshot13.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot14.jpg')"><img src="pics/thumb_screenshot14.png" alt="screenshot" /></a>
+	</p>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot15.jpg')"><img src="pics/thumb_screenshot15.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot16.jpg')"><img src="pics/thumb_screenshot16.png" alt="screenshot" /></a>
+	</p>
+
+	<h2>Alternate graphic set</h2>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot5.jpg')"><img src="pics/thumb_screenshot5.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot6.jpg')"><img src="pics/thumb_screenshot6.png" alt="screenshot" /></a>
+	</p>
+	<p class="screens">
+		<a href="javascript:zoom('pics/screenshot7.jpg')"><img src="pics/thumb_screenshot7.png" alt="screenshot" /></a>
+		<a href="javascript:zoom('pics/screenshot8.jpg')"><img src="pics/thumb_screenshot8.png" alt="screenshot" /></a>
+	</p>
+	
+</div>
+
+<div id="download">
+	<h1>Download</h1>
+	<p>
+		The Maze of Galious remake is available for Windows, Mac OS X and Linux computers.
+		We provide binary versions for both Windows and OSX, for Ubuntu/Debian you can download a .deb file. For Linux or other computers you can find the source code for the game in the Linux download.
+	</p>
+	<h2>Official releases</h2>
+	<p>
+		You can download the remake from our primary server or from our <a href="http://braingames.afraid.org/mog/">mirror</a>. File size is about 30MB, since the download contains all graphics and datasets. You can also try one of the <a href="http://braingames.jorito.net/nightlies/">nightly SVN exports</a> for the most current version.
+	</p>
+	<ul>
+		<li><a href="http://braingames.jorito.net/mog/downloads/mog_20080415.zip">Windows version</a></li>
+		<li><a href="http://braingames.jorito.net/mog/downloads/Maze%20of%20Galious-20081201.dmg">OSX version</a></li>
+		<li><a href="http://braingames.jorito.net/mog/downloads/mog.804_0.63-1548_i386.deb">Debian/Ubuntu 8.04 version</a> (<a href="http://braingames.jorito.net/mog/downloads/mog.804_0.63-1548_amd64.deb">amd64</a>)</li>
+		<li><a href="http://braingames.jorito.net/mog/downloads/mog.810_0.63-1548_i386.deb">Debian/Ubuntu 8.10 version</a> (<a href="http://braingames.jorito.net/mog/downloads/mog.810_0.63-1548_amd64.deb">amd64</a>)</li>
+		<li><a href="http://braingames.jorito.net/mog/downloads/mog.904_0.63-1548_i386.deb">Debian/Ubuntu 9.04 version</a> (<a href="http://braingames.jorito.net/mog/downloads/mog.904_0.63-1548_amd64.deb">amd64</a>)</li>
+		<li><a href="http://braingames.jorito.net/mog/downloads/mog.src_0.63-1548.tgz">Source code + data</a></li>
+
+	</ul>	
+	<h2>Other downloads</h2>
+	<p>
+		There's also some extra goodies you might be interested in:
+	</p>
+	<ul>
+		<li>
+			<a href="http://braingames.jorito.net/mog/downloads/passgen_v021.zip">Password generator 0.21</a> by Lars18th.
+		</li>
+	</ul>
+</div>
+
+<div id="howtoplay">
+	<h1>How to play</h1>
+	<p>
+		The objective of this game is to recapture Castle Greek and the 10 worlds from the evil demons, slay the evil high priest and rescue our brave couple's future baby Pampas.
+	</p>
+	<p>
+		Our main characters are Popolon and Aphrodite. They each have their own special talents and you must learn how to use them appropriately according to the situation as you proceed through the game. To have them change places, press the <em>option</em> key to display the option window.
+	</p>
+	<p>
+		In the castle there are hidden weapons that are effective against certain enemies. Collect these weapons and try to discover which weapons work best against the monsters. They can be selected through the option window.
+	</p>
+
+	<p>
+		Our heroes have VIT (vitality) and EXP (experience). If the EXP meter is full, the VIT meter is refilled. The <em>'Great key'</em> adds 8 levels to your <em>'Maximum Vitality'</em>.
+	</p>
+	
+	<h2>Controls</h2>
+	<p>
+		These are the default controls of the game. They can be redefined in the options menu.
+	</p>
+	<table>
+		<tr>
+			<th>Key</th>
+			<th>Action</th>
+			<th>Info</th>
+		</tr>
+		<tr>
+			<td>Cursor up</td>
+			<td>Jump up, climb up ladders</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Cursor down</td>
+			<td>Climb down</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Cursor left</td>
+			<td>Walk to the left</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Cursor right</td>
+			<td>Walk to the right</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Space</td>
+			<td>Attack</td>
+			<td>Can also be done while jumping</td>
+		</tr>
+		<tr>
+			<td>F-1</td>
+			<td>Option key; select player/item</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>F-2</td>
+			<td>Pause</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>F10 or 9</td>
+			<td>Select graphics set</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>F11 or 0</td>
+			<td>Select music set</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ESC</td>
+			<td>Back to title screen</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ALT+ENTER</td>
+			<td>Switch between full-screen and window mode</td>
+			<td>For Windows and Linux</td>
+		</tr>
+		<tr>
+			<td>Apple key+F</td>
+			<td>Switch between full-screen and window mode</td>
+			<td>Only for Mac OS X</td>
+		</tr>
+		<tr>
+			<td>F12</td>
+			<td>Quit</td>
+			<td>For Windows and Linux</td>
+		</tr>
+		<tr>
+			<td>Apple key+Q</td>
+			<td>Quit</td>
+			<td>Only for Mac OS X</td>
+		</tr>
+	</table>
+	<h2>Characters and components</h2>
+	
+	<h3>Popolon</h3>
+	<div class="img"><img src="pics/popolon.gif" alt="popolon" /></div>
+	<p>
+		Popolon is a true warrior. He saved Aphrodite in the previous game, Knightmare.
+	</p>
+	<p>
+		Popolon can destroy rocks a lot faster than Aphrodite can, but he'll rapidly lose power in water. Popolon can pass through revolving doors, while Aphrodite can't. And his jumping height depends on how long the UP key is pressed.
+	</p>
+	<h3>Aphrodite</h3>
+	<div class="img"><img src="pics/aphrodite.gif" alt="aphrodite" /></div>
+	<p>
+		Aphrodite is the Greek Goddess of love.
+	</p>
+	<p>
+		Aphrodite can swim, while Popolon can't. She can make three shots at a time, while Popolon can only shoot two. The same is true for mines; she can put three down. Also, the jumping height is constant with Aphrodite.
+	</p>
+
+
+	<h3>Enemies</h3>
+	<div class="img">
+		<img src="pics/skeleton.gif" alt="skeleton" />
+		<img src="pics/bat.gif" alt="bat" />
+		<img src="pics/spider.gif" alt="spider" />
+		<img src="pics/plant.gif" alt="plant" />
+		<img src="pics/worm.gif" alt="worm" />
+	</div>
+	<p>
+		There's a lot of different bad guys in the game. Their only aim is to watch you die! Above is a small selection of the early enemies.
+	</p>
+	<h3>Keys</h3>
+	<div class="img">
+		<img src="pics/key_big.gif" alt="big key" />
+		<img src="pics/key_small.gif" alt="small key" />
+	</div>	
+	<p>
+		Great keys unlock the access to a new world whereas small keys can be used to open normal doors.
+	</p>
+	<h3>Weapons</h3>
+	<div class="img">
+		<img src="pics/arrows.gif" alt="arrows" />
+		<img src="pics/mine.gif" alt="mine" />
+	</div>
+	<p>
+		During your trip through the castle you can pick up arrows, fire and mines to harras your enemies.
+	</p>
+	<h3>Shrines</h3>
+	<div class="img"><img src="pics/shrine.gif" alt="shrines" /></div>			
+	<p>
+		Throughout the castle various shrines can be found. Here you can save your game with a password, buy weapons or items and get advice from the Gods. 
+	</p>
+	<h3>But there's more!</h3>
+	<p>		
+		Of course this is only a brief glimpse of everything the game has to offer. There's lots of other items, enemies, demons and worlds for you to conquer!	
+	</p>		
+</div>
+
+<div id="passwords">
+	<h1>Password decoding</h1>
+	<p>
+		Maze of Galious contains a password system that's used to restore your games. Because this is an integral part of the game this also should be present in the remake. Therefore Santi decided to decode the password system and write down his findings. You can read all about this on the special <a href="passwords.html">password decoding</a> page.
+	</p>	
+</div>
+
+<div id="credits">
+	<h1>Credits</h1>
+	<p>
+		The game was made from 2002 onwards by the following people:
+	</p>
+	<h2>Coding</h2>
+	<ul>
+		<li>Santi Onta&ntilde;&oacute;n (Spain)</li>
+		<li>Jorrith Schaap (Netherlands)</li>
+	</ul>
+	
+	<h2>Graphics</h2>
+	<ul>
+		<li>Santi Onta&ntilde;&oacute;n</li>
+		<li>Boltian from Spain</li>
+		<li>Hinox from Spain</li>
+		<li>MP83 from Finland</li>
+		<li>Naramura from Japan</li>
+	</ul>
+	
+	<h2>Music &amp; SFX</h2>
+	<ul>
+		<li>Rob Powelse from the Netherlands</li>
+		<li>Jorrith Schaap</li>
+		<li>Bart Roijmans from the Netherlands</li>
+		<li>Wolf_ from the Netherlands</li>
+		<li>Randy Wintjes from the Netherlands</li>
+	</ul>
+	
+	<h2>Maps</h2>
+	<ul>
+		<li>Santi Onta&ntilde;&oacute;n</li>
+	</ul>
+	
+	<h2>Beta testing</h2>
+	<ul>
+		<li>Koiote from Spain</li>
+		<li>Henk Bosman from the Netherlands</li>
+		<li>Patrick van Arkel</li>
+		<li>Wisam al-Rawi from Iraq</li>
+		<li>Max Attar Feingold from the US</li>
+		<li>Sergi Garcia Besora from Spain</li>
+		<li>Zita Miranda Martinez from Spain</li>
+		<li>Menno Haeck from the Netherlands</li>
+		<li>Janne Vieri from Finland</li>
+	</ul>
+</div>
+
+<div id="footer">
+	Original game &copy; 1987 by <a href="http://www.konami.co.jp">Konami</a>, 
+	remake &copy; 2002 - 2009 <a href="http://www.braingames.getput.com/">Brain Games</a>
+</div>
+
+<script type="text/javascript" src="lib-min.js"></script>
+
+</body>
+</html>
