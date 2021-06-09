@@ -1,6 +1,17 @@
 MAZE OF GALIOUS REMAKE v0.63
 Santi Ontañón Villar
 
+Note: This is a modification of the original version with updates to build/run on modern versions of macOS.
+
+To build, use Homebrew to install the following libraries and tools:
+
+$ brew install sdl sdl_image sdl_mixer sdl_sound cmake make dylibbundler
+
+Then run:
+
+$ cmake .
+
+$ make
 
 KEYS:
 
