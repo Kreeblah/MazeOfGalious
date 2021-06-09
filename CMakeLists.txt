@@ -89,7 +89,7 @@ if (SDL_SOUND_FOUND)
 endif()
 
 if (APPLE)
-	source_group("macos" REGULAR_EXPRESSION "${CMAKE_CURRENT_SOURCE_DIR}/build/osx/Maze of Galious/.+")
+	source_group("macos" REGULAR_EXPRESSION "${CMAKE_CURRENT_SOURCE_DIR}/build/osx/Maze of Galious/SDLMain.+")
 	set(MoGIcon "${CMAKE_CURRENT_SOURCE_DIR}/build/osx/Maze of Galious.icns")
 	set_source_files_properties(${MoGIcon} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 	file(GLOB_RECURSE GRAPHICS_RES "${CMAKE_CURRENT_SOURCE_DIR}/graphics/*")
