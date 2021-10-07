@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 project(MazeOfGalious)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
-set(MOG_VERSION "0.6.3")
+set(MOG_VERSION "0.63")
 set(MACOSX_DEPLOYMENT_TARGET "10.15")
 
 set(SHARED_SOURCES
@@ -123,6 +123,8 @@ if (APPLE)
 	set_target_properties(MazeOfGalious PROPERTIES OUTPUT_NAME "Maze of Galious")
 	if(EXISTS "/usr/local/bin/dylibbundler")
 		add_custom_command(TARGET MazeOfGalious POST_BUILD COMMAND /bin/zsh -c "/usr/local/bin/dylibbundler -od -b -x \"${CMAKE_CURRENT_SOURCE_DIR}/Maze of Galious.app/Contents/MacOS/Maze of Galious\" -d \"${CMAKE_CURRENT_SOURCE_DIR}/Maze of Galious.app/Contents/libs\"")
+	elseif(EXISTS "/opt/homebrew/bin/dylibbundler")
+		add_custom_command(TARGET MazeOfGalious POST_BUILD COMMAND /bin/zsh -c "/opt/homebrew/bin/dylibbundler -od -b -x \"${CMAKE_CURRENT_SOURCE_DIR}/Maze of Galious.app/Contents/MacOS/Maze of Galious\" -d \"${CMAKE_CURRENT_SOURCE_DIR}/Maze of Galious.app/Contents/libs\"")
 	endif()
 else()
 	add_executable(MazeOfGalious WIN32 ${SHARED_SOURCES})
