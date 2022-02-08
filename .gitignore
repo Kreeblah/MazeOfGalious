@@ -2,5 +2,6 @@ CMakeCache.txt
 CMakeFiles
 CMakeTmp
 Makefile
+Brewfile.lock.json
 cmake_install.cmake
 Maze of Galious.app
