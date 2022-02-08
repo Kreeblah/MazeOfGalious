@@ -3,7 +3,6 @@ project(MazeOfGalious)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set(MOG_VERSION "0.63")
-set(MACOSX_DEPLOYMENT_TARGET "10.15")
 
 set(SHARED_SOURCES
 	sources/MOGtypes.h
@@ -53,7 +52,11 @@ set(SHARED_LIBS
 
 if (APPLE)
 	set(CMAKE_OSX_DEPLOYMENT_TARGET ${MACOSX_DEPLOYMENT_TARGET})
-	set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk")
+	if (MACOSX_DEPLOYMENT_TARGET)
+		set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX${MACOSX_DEPLOYMENT_TARGET}.sdk")
+	else()
+		set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk")
+	endif()
 	set(CMAKE_CXX_FLAGS "--sysroot \"${CMAKE_OSX_SYSROOT}\" ${CMAKE_CXX_FLAGS}")
 endif()
 
