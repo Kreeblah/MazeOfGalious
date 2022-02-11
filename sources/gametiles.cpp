@@ -15,8 +15,6 @@
 #include "mog.h"
 
 
-extern SDL_Window *screen;
-
 /* Paths: */ 
 
 extern char **g_paths;

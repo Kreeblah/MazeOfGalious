@@ -514,7 +514,7 @@ void newgame(void)
 // type=1 only background
 // type=2 only objects
 
-void drawmap(BYTE *screen,int dx,int dy,int type)
+void drawmap(BYTE *screen_byte,int dx,int dy,int type)
 {
 	int i,j;
 	int val;
@@ -524,7 +524,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 			for(j=0;j<room_size_x;j++) {
 				tiles[room_tiles[j+i*room_size_x]]->
 						draw(GAME_VIEW_X+j*TILE_SIZE_X,GAME_VIEW_Y+i*TILE_SIZE_Y,
-							TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 			} /* for */ 
 		} /* for */ 
 
@@ -554,7 +554,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						 } /* if */ 
 						tiles[tile]->
 								draw(GAME_VIEW_X+j*TILE_SIZE_X,GAME_VIEW_Y+i*TILE_SIZE_Y,
-									TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+									TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 				} /* for */ 
 			} /* for */ 
@@ -563,9 +563,9 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 		if (room_demonroom) {
 			tiles[demonsign_tile]->
 				draw(GAME_VIEW_X+TILE_SIZE_X*12,GAME_VIEW_Y+TILE_SIZE_Y*4,
-					 TILE_SIZE_X*8,TILE_SIZE_Y*8,screen,col_buffer,dx,dy,dx);
+					 TILE_SIZE_X*8,TILE_SIZE_Y*8,screen_byte,col_buffer,dx,dy,dx);
 
-			draw_demon_background(screen,dx,dy,dx);
+			draw_demon_background(screen_byte,dx,dy,dx);
 
 			for(i=0;i<room_size_y;i++) {
 				for(j=0;j<room_size_x;j++) {
@@ -573,7 +573,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						room_tiles[j+i*room_size_x]==126)
 						tiles[room_tiles[j+i*room_size_x]]->
 								draw(GAME_VIEW_X+j*TILE_SIZE_X,GAME_VIEW_Y+i*TILE_SIZE_Y,
-									TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+									TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* for */ 
 			} /* for */ 
 		} /* if */ 
@@ -587,7 +587,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 				if (map_x==lever_room_x[i] && map_y==lever_room_y[i]) {
 					tiles[lever_tile]->
 						draw(GAME_VIEW_X+lever_x[i],GAME_VIEW_Y+lever_y[i],
-							 TILE_SIZE_X*4,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*4,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 			} /* for */ 
 		} /* if */ 
@@ -600,13 +600,13 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 				for(j=0;j<object[i].size && (object[i].y+j*TILE_SIZE_Y)<(room_size_y*TILE_SIZE_Y);j++) {
 					tiles[ladder_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+(object[i].y+j*TILE_SIZE_Y),
-							 TILE_SIZE_X*2,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* for */ 
 				break;
 			case T_STONE:
 				tiles[stone_tile]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				tiles[stone_tile+2]->
 					draw_only_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
 						 TILE_SIZE_X*2,TILE_SIZE_Y*2,col_buffer,dx,dy,dx);			
@@ -614,74 +614,74 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 			case T_BROKEN_STONE:
 				tiles[stone_tile+1]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				break;
 			case T_WDOOR:
 				tiles[wdoor_tile]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*4,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X*4,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 				if (object[i].state==1) {
 					tiles[ladder_tile]->
 						draw(GAME_VIEW_X+object[i].x+TILE_SIZE_X,GAME_VIEW_Y+(object[i].y+TILE_SIZE_Y),
-							 TILE_SIZE_X*2,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					tiles[ladder_tile]->
 						draw(GAME_VIEW_X+object[i].x+TILE_SIZE_X,GAME_VIEW_Y+(object[i].y+2*TILE_SIZE_Y),
-							 TILE_SIZE_X*2,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_DOOR:
 				tiles[door_tile]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				break;
 			case T_KEYDOOR:
 				if (object[i].state>=0) {
 					for(j=0;j<3;j++) {
 						tiles[keydoor_tile]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+(object[i].y+j*TILE_SIZE_Y),
-								 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+								 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					} /* for */ 
 				} else {
 					if (object[i].state<-20) {
 						tiles[keydoor_tile]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+(object[i].y+2*TILE_SIZE_Y),
-								 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+								 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 					if (object[i].state<-12) {
 						tiles[keydoor_tile]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+(object[i].y+TILE_SIZE_Y),
-								 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+								 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 					tiles[keydoor_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_WKEYDOOR:
 				if (object[i].state>=0) {
 					tiles[wkeydoor_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					if (object[i].state2==0) {
 						if (object[i].state<-20) {
 							tiles[wkeydoor_tile+1]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[wkeydoor_tile+2]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} else {
 						if (object[i].state<-20) {
 							tiles[wkeydoor_tile+1]->
 								draw(GAME_VIEW_X+object[i].x-TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[wkeydoor_tile+2]->
 								draw(GAME_VIEW_X+object[i].x-TILE_SIZE_X*2,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 				} /* if */ 
@@ -697,38 +697,38 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 					if (object[i].state>=0) {
 						tiles[wnokeydoor_tile+val]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 TILE_SIZE_X,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+								 TILE_SIZE_X,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 					} else {
 						if (object[i].state2==0) {
 							if (object[i].state<-16) {
 								tiles[wnokeydoor_tile+1+val]->
 									draw(GAME_VIEW_X+object[i].x-(TILE_SIZE_X/2),GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 							} else {
 								if (object[i].state<-8) {
 									tiles[wnokeydoor_tile+2+val]->
 										draw(GAME_VIEW_X+object[i].x-TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-											 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+											 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 								} else {
 									tiles[wnokeydoor_tile+3+val]->
 										draw(GAME_VIEW_X+object[i].x-(TILE_SIZE_X/2),GAME_VIEW_Y+object[i].y,
-											 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+											 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 								} /* if */ 
 							} /* if */ 
 						} else {
 							if (object[i].state<-16) {
 								tiles[wnokeydoor_tile+3+val]->
 									draw(GAME_VIEW_X+object[i].x-(TILE_SIZE_X/2),GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 							} else {
 								if (object[i].state<-8) {
 									tiles[wnokeydoor_tile+2+val]->
 										draw(GAME_VIEW_X+object[i].x-TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-											 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+											 TILE_SIZE_X*3,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 								} else {
 									tiles[wnokeydoor_tile+1+val]->
 										draw(GAME_VIEW_X+object[i].x-(TILE_SIZE_X/2),GAME_VIEW_Y+object[i].y,
-											 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+											 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 								} /* if */ 
 							} /* if */ 
 						} /* if */ 
@@ -739,62 +739,62 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 				if (object[i].state==-1) 
 					tiles[coin_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				if (object[i].state==-2) 
 					tiles[key_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				if (object[i].state==-3) 
 					tiles[arrow_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				if (object[i].state>=0 && object[i].state<32)  {
 					tiles[items_tile+object[i].state]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				/* Armas: */ 
 				if (object[i].state==32 || object[i].state==33)  {
 					tiles[armas_tile+object[i].state-32]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				if (object[i].state==34 || object[i].state==35)  {
 					tiles[armas_tile+object[i].state-32]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				if (object[i].state==37) {
 					tiles[items_tile+37]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				if (object[i].state==36) {
 					tiles[items_tile+36]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				if (object[i].state>=38) {
 					tiles[items_tile+object[i].state-6]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_EXPLOSION:
 				tiles[explosion_tile+((object[i].size%9)/3)]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				break;
 			case T_WEAPON_ARROW:
 				object[i].state3=object[i].x;
 				if (object[i].state==0) {
 					tiles[armas_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					tiles[armas_tile+6]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_WEAPON_ARROW2:
@@ -802,79 +802,79 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 				if (object[i].state==0) {
 					tiles[armas_tile+1]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					tiles[armas_tile+7]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_RFL_ARROW:
 				if (object[i].state==0) {
 					tiles[armas_tile+14]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					tiles[armas_tile+15]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_RFL_ARROW2:
 				if (object[i].state==0) {
 					tiles[armas_tile+16]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					tiles[armas_tile+17]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_RFL_FIRE:
 				if (object[i].state==0) {
 					tiles[armas_tile+18]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					tiles[armas_tile+19]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;
 			case T_RFL_RFIRE:
 				tiles[armas_tile+20]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 screen,col_buffer,dx,dy,dx);
+						 screen_byte,col_buffer,dx,dy,dx);
 				break;
 			case T_WEAPON_FIRE:
 				object[i].state3=object[i].x;
 				if (object[i].state==0) {
 					tiles[armas_tile+3]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} else {
 					tiles[armas_tile+8]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				} /* if */ 
 				break;	
 			case T_WEAPON_RFIRE:
 				tiles[armas_tile+object[i].tile]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 				break;	
 			case T_WEAPON_MINE:
 				object[i].state3=object[i].x;
 				tiles[armas_tile+object[i].tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				
 				break;
 			case T_MINE_EXP:
 				tiles[armas_tile+object[i].tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 				tiles[armas_tile+object[i].tile]->
 						draw_only_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y-(TILE_SIZE_Y*3)/2,
 										col_buffer,dx,dy,dx);
@@ -882,32 +882,32 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 			case T_ARMOUR:
 				tiles[object[i].base_tile]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);			
+						 TILE_SIZE_X*2,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);			
 				break;
 			case T_TOMB:
 				tiles[tomb_tile]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);			
+						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);			
 				break;
 			case T_FAIRY_BUBBLE:
 				tiles[fairy_tile+6+object[i].state3]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X/2,TILE_SIZE_Y/2,screen,col_buffer,dx,dy,dx);			
+						 TILE_SIZE_X/2,TILE_SIZE_Y/2,screen_byte,col_buffer,dx,dy,dx);			
 				break;
 			case T_FAIRY:
 				if (object[i].state3<80) {
 					tiles[fairy_tile+((object[i].state3>>3)&0x01)+4]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);			
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);			
 				} else {
 					if (object[i].state>=0) {
 						tiles[fairy_tile+((object[i].state3>>2)&0x01)+2]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);			
+								 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);			
 					} else {
 						tiles[fairy_tile+((object[i].state3>>2)&0x01)]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);			
+								 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);			
 					} /* if */ 
 				} /* if */ 
 				break;
@@ -924,7 +924,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 							tiles[val]->
 								draw(GAME_VIEW_X+object[i].x+k*TILE_SIZE_X,
 									 GAME_VIEW_Y+object[i].y+j*TILE_SIZE_Y,
-									 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 						} /* for */ 
 					} /* for */ 
 				}
@@ -932,7 +932,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 			case T_PAMPERSE:
 				tiles[182]->
 					draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+						 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 				break;
 			case T_ENEMY:
 				switch(object[i].enemy) {
@@ -952,7 +952,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 					} /* if */ 
 					tiles[object[i].base_tile+val]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y+worm_state_y[j]*TILE_UNIT,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_BAT:
 					{
@@ -967,7 +967,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 
 						tiles[object[i].base_tile+j]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+								 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					}
 					break;
 				case T_SKELETON:
@@ -979,67 +979,67 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 					case 4:
 					case 5:tiles[object[i].base_tile+6]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						break;
 					case 6:tiles[object[i].base_tile+5]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						break;
 					case 7:tiles[object[i].base_tile+4]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						break;
 					default: /* NORMAL: */ 
 						switch(object[i].state) {
 						case 0: /* CAMINA IZQ: */ 
 							tiles[object[i].base_tile+j]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+7+j]->
 								draw(GAME_VIEW_X+object[i].x-8*TILE_UNIT,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							break;
 						case 1: /* CAMINA DER: */ 
 							tiles[object[i].base_tile+2+j]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+9+j]->
 								draw(GAME_VIEW_X+object[i].x+8*TILE_UNIT,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							break;
 						case 2: /* QUIETO IZQ: */ 
 							tiles[object[i].base_tile]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+7]->
 								draw(GAME_VIEW_X+object[i].x-8*TILE_UNIT,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							break;
 						case 3: /* QUIETO DER: */ 
 							tiles[object[i].base_tile+2]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+9]->
 								draw(GAME_VIEW_X+object[i].x+8*TILE_UNIT,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							break;
 						case 5:
 						case 7: /* SALTANDO IZQ: */ 
 							tiles[object[i].base_tile+1]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+7]->
 								draw(GAME_VIEW_X+object[i].x-8*TILE_UNIT,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							break;
 						case 4:
 						case 6: /* SALTANDO DER: */ 
 							tiles[object[i].base_tile+3]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+9]->
 								draw(GAME_VIEW_X+object[i].x+8*TILE_UNIT,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 							break;
 						} /* switch */ 
 						break;
@@ -1061,24 +1061,24 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 								if ((object[i].state%6)>=3)
 									tiles[val]->
 										draw_without_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-											 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,dx,dy,dx);
+											 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,dx,dy,dx);
 								break;
 							case 2:
 							case 6:
 								tiles[val+((object[i].state%6)<3 ? 0 : 1)]->
 									draw_without_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,dx,dy,dx);
 								break;
 							case 3:
 							case 5:
 								tiles[val+((object[i].state%6)<3 ? 1 : 2)]->
 									draw_without_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,dx,dy,dx);
 								break;
 							case 4:
 								tiles[val+((object[i].state%6)<3 ? 2 : 3)]->
 									draw_without_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,dx,dy,dx);
 								break;
 							} /* switch */ 
 						} else {
@@ -1090,24 +1090,24 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 								if ((object[i].state%6)>=3)
 									tiles[val]->
 										draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-											 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+											 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 								break;
 							case 2:
 							case 6:
 								tiles[val+((object[i].state%6)<3 ? 0 : 1)]->
 									draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 								break;
 							case 3:
 							case 5:
 								tiles[val+((object[i].state%6)<3 ? 1 : 2)]->
 									draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 								break;
 							case 4:
 								tiles[val+((object[i].state%6)<3 ? 2 : 3)]->
 									draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+										 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 								break;
 							} /* switch */ 
 						} /* if */ 
@@ -1119,11 +1119,11 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						if (item[10]) {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw_without_mask(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,dx,dy,dx);
+									 screen_byte,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
@@ -1133,11 +1133,11 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						if (item[2]) {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw_without_mask(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,dx,dy,dx);
+									 screen_byte,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
@@ -1150,11 +1150,11 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						if (item[23]) {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw_without_mask(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,dx,dy,dx);
+									 screen_byte,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
@@ -1164,21 +1164,21 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						if (object[i].state2<6) {
 							tiles[object[i].base_tile]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+1]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} else {
 						if (object[i].state2<6) {
 							tiles[object[i].base_tile+2]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+3]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
@@ -1186,121 +1186,121 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 				case T_WATERMONSTER:
 					tiles[object[i].base_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y-object[i].state2,
-							 TILE_SIZE_X*3,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*3,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					tiles[object[i].base_tile+5]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*3,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*3,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_WATERMONSTER_ARM:
 					tiles[object[i].base_tile+1]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y-(object[i].state2*TILE_SIZE_Y)/2,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					for(j=0;j<(object[i].state2*TILE_SIZE_Y)/2;j+=TILE_SIZE_Y) {
 						if ((object[i].state2&0x01)==0) {
 							tiles[object[i].base_tile+2]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y-j,
-									 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);				
+									 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);				
 						} else {
 							tiles[object[i].base_tile+3]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y-j,
-									 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);				
+									 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);				
 						} /* if */ 
 					} /* for */ 
 					break;
 				case T_BUBBLE:
 					tiles[object[i].base_tile+object[i].tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_FSTONE:
 					tiles[object[i].base_tile+((object[i].state3>>2)&0x03)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_RSTONE:
 					tiles[object[i].base_tile+((object[i].state3>>2)&0x03)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_KNIGHT:
 					tiles[object[i].base_tile+object[i].state2]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					if (object[i].state==1 || object[i].state==7 || object[i].state==9) {
 						if (object[i].state2==0) {
 							tiles[object[i].base_tile+8]->
 								draw(GAME_VIEW_X+object[i].x-TILE_SIZE_X*2,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+8]->
 								draw(GAME_VIEW_X+object[i].x+TILE_UNIT*2-TILE_SIZE_X*2,GAME_VIEW_Y+object[i].y-TILE_UNIT,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					if (object[i].state==0 || object[i].state==6 || object[i].state==8) {
 						if (object[i].state2==2) {
 							tiles[object[i].base_tile+9]->
 								draw(GAME_VIEW_X+object[i].x+TILE_SIZE_X*2,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+9]->
 								draw(GAME_VIEW_X+object[i].x+TILE_SIZE_X*2-TILE_UNIT*2,GAME_VIEW_Y+object[i].y-TILE_UNIT,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
 				case T_BLOB:
 					tiles[object[i].base_tile+object[i].state2]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 
 				case T_PORCUPINE_BULLET:
 					tiles[object[i].base_tile+8]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_JUMPINGBUSH:
 					tiles[object[i].base_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y+object[i].state2,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					object[i].draw_y=GAME_VIEW_Y+object[i].y+object[i].state2;
 					break;
 
 				case T_BLACK:
 					tiles[object[i].base_tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_WITCH:
 					if (object[i].state!=0) {
 						if (item[1]) {
 							tiles[object[i].base_tile]->
 								draw_without_mask(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile]->
 								draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+									 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
 				case T_WHITEBEAR_BULLET:
 					tiles[object[i].base_tile+4+object[i].state]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_FEET:
 					tiles[object[i].base_tile+object[i].tile]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					object[i].draw_y=GAME_VIEW_Y+object[i].y-TILE_SIZE_Y/2;
 					break;
 				case T_BOUNCINGBALL:
 					if (object[i].tile>=0) {
 						tiles[object[i].base_tile+object[i].tile]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y+object[i].state,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 						object[i].draw_y=GAME_VIEW_Y+object[i].y+object[i].state;
 					} /* if */ 
 					break;
@@ -1308,57 +1308,57 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 					if (object[i].tile>=0) {
 						tiles[object[i].base_tile+object[i].tile]->
 							draw(GAME_VIEW_X+object[i].x+object[i].state2,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 						object[i].draw_x=GAME_VIEW_X+object[i].x+object[i].state2;
 					} /* if */ 
 					break; 
 				case T_MEGABAT:
 					tiles[object[i].base_tile+((object[i].state2>>3)%2)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*4,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*4,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_MEGABAT2:
 					tiles[object[i].base_tile+((object[i].state2>>2)%2)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_MEGABAT3:
 					tiles[object[i].base_tile+2+((object[i].state2>>2)%2)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*1,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*1,screen_byte,col_buffer,dx,dy,dx);
 					break;
 
 				case T_DEMON1:
 					tiles[object[i].state]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*10,TILE_SIZE_Y*7,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*10,TILE_SIZE_Y*7,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_DEMON1_BONES:
 					tiles[demon_tile+12+(object[i].state2>>1)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*2,TILE_SIZE_Y*2,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_DEMON1_BONES2:
 					tiles[demon_tile+12+(object[i].state2>>1)]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					break;
 
 				case T_DEMON2:
 					tiles[object[i].state]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X*6,TILE_SIZE_Y*6,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X*6,TILE_SIZE_Y*6,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_DEMON2_BALLS:
 					tiles[demon_tile+7]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+							 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_DEMON2_HEAD:
 					if (object[i].state>=0) {
 						tiles[object[i].state]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+								 TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 					break;
 				case T_DEMON3_FIRE:
@@ -1366,76 +1366,76 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						int j;
 						tiles[demon_tile+6]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 						for(j=0;j<object[i].state2;j++) {
 							tiles[demon_tile+7]->
 								draw(GAME_VIEW_X+object[i].x+(j+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 						tiles[demon_tile+8]->
 							draw(GAME_VIEW_X+object[i].x+(object[i].state2+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 					} else {
 						tiles[demon_tile+11]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 						for(j=0;j<object[i].state2;j++) {
 							tiles[demon_tile+10]->
 								draw(GAME_VIEW_X+object[i].x-(j+1)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 						tiles[demon_tile+9]->
 							draw(GAME_VIEW_X+object[i].x-(object[i].state2+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 					break;
 				case T_DEMON9_FIRE:
 					tiles[demon_tile+8]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 					for(j=0;j<object[i].state2;j++) {
 						tiles[demon_tile+7]->
 							draw(GAME_VIEW_X+object[i].x-(j+1)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 					tiles[demon_tile+6]->
 						draw(GAME_VIEW_X+object[i].x-(object[i].state2+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_DEMON5:
 					tiles[object[i].base_tile+object[i].state3]->
 						draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y+TILE_SIZE_Y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 					tiles[object[i].base_tile+object[i].tile]->
 						draw(GAME_VIEW_X+object[i].x+4*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-							 screen,col_buffer,dx,dy,dx);
+							 screen_byte,col_buffer,dx,dy,dx);
 					break;
 				case T_DEMON5_FIRE:
 					if (object[i].state==0) {
 						int j;
 						tiles[demon_tile+20]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 						for(j=0;j<object[i].state2;j++) {
 							tiles[demon_tile+21]->
 								draw(GAME_VIEW_X+object[i].x+(j+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 						tiles[demon_tile+22]->
 							draw(GAME_VIEW_X+object[i].x+(object[i].state2+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 					} else {
 						tiles[demon_tile+25]->
 							draw(GAME_VIEW_X+object[i].x,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 						for(j=0;j<object[i].state2;j++) {
 							tiles[demon_tile+24]->
 								draw(GAME_VIEW_X+object[i].x-(j+1)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 						tiles[demon_tile+23]->
 							draw(GAME_VIEW_X+object[i].x-(object[i].state2+2)*TILE_SIZE_X,GAME_VIEW_Y+object[i].y,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 					break;
 				case T_GORILLA:
@@ -1443,18 +1443,18 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						if (object[i].state>=5) {
 							tiles[object[i].base_tile+6]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs-2*TILE_SIZE_Y,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+6]->
 								draw_only_mask(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs-3*TILE_SIZE_Y,
 									 2*TILE_SIZE_X,2*TILE_SIZE_Y,
 									 col_buffer,dx,dy,dx);
 							tiles[object[i].base_tile+object[i].tile]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} else {
 							tiles[object[i].base_tile+object[i].tile]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 						} /* if */ 
 					} /* if */ 
 					break;
@@ -1468,7 +1468,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 							for(j=0;j<v;j++) {
 								tiles[object[i].base_tile+14+j]->
 									draw(GAME_VIEW_X+object[i].x+object[i].xoffs+TILE_SIZE_X+TILE_UNIT*5,GAME_VIEW_Y+object[i].y+object[i].yoffs+TILE_SIZE_Y+TILE_UNIT*5-(v-j)*TILE_SIZE_Y,
-										 screen,col_buffer,dx,dy,dx);
+										 screen_byte,col_buffer,dx,dy,dx);
 							} /* for */ 
 						} else {
 							v=((48-object[i].state2)/2)+2;
@@ -1476,7 +1476,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 							for(j=0;j<v;j++) {
 								tiles[object[i].base_tile+14+j]->
 									draw(GAME_VIEW_X+object[i].x+object[i].xoffs+TILE_SIZE_X+TILE_UNIT*5,GAME_VIEW_Y+object[i].y+object[i].yoffs+TILE_SIZE_Y+TILE_UNIT*5-(v-j)*TILE_SIZE_Y,
-										 screen,col_buffer,dx,dy,dx);
+										 screen_byte,col_buffer,dx,dy,dx);
 							} /* for */ 
 						} /* if */ 
 					} else {
@@ -1488,7 +1488,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 							for(j=0;j<v;j++) {
 								tiles[object[i].base_tile+14-(v-j)]->
 									draw(GAME_VIEW_X+object[i].x+object[i].xoffs+TILE_SIZE_X+TILE_UNIT*5,GAME_VIEW_Y+object[i].y+object[i].yoffs+TILE_SIZE_Y+TILE_UNIT*5+j*TILE_SIZE_Y,
-										 screen,col_buffer,dx,dy,dx);
+										 screen_byte,col_buffer,dx,dy,dx);
 							} /* for */ 
 						} else {
 							v=((48-object[i].state2)/2)+2;
@@ -1496,7 +1496,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 							for(j=0;j<v;j++) {
 								tiles[object[i].base_tile+14-(v-j)]->
 									draw(GAME_VIEW_X+object[i].x+object[i].xoffs+TILE_SIZE_X+TILE_UNIT*5,GAME_VIEW_Y+object[i].y+object[i].yoffs+TILE_SIZE_Y+TILE_UNIT*5+j*TILE_SIZE_Y,
-										 screen,col_buffer,dx,dy,dx);
+										 screen_byte,col_buffer,dx,dy,dx);
 							} /* for */ 
 						} /* if */ 
 					} /* if */  
@@ -1510,7 +1510,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 						for(j=0;j<object[i].state3;j++) {
 							tiles[object[i].base_tile+6+object[i].lightning[j]+(object[i].state2%3)*5]->
 								draw(GAME_VIEW_X+object[i].x+object[i].xoffs+x,GAME_VIEW_Y+object[i].y+object[i].yoffs+j*TILE_SIZE_Y*2,
-									 screen,col_buffer,dx,dy,dx);
+									 screen_byte,col_buffer,dx,dy,dx);
 							if (j<object[i].state3-1) x+=(end[object[i].lightning[j]]-init[object[i].lightning[j+1]])*TILE_UNIT;
 						} /* for */ 
 					}
@@ -1519,7 +1519,7 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 					if (object[i].tile>=0) {
 						tiles[object[i].base_tile+object[i].tile]->
 							draw(GAME_VIEW_X+object[i].x+object[i].xoffs,GAME_VIEW_Y+object[i].y+object[i].yoffs,
-								 screen,col_buffer,dx,dy,dx);
+								 screen_byte,col_buffer,dx,dy,dx);
 					} /* if */ 
 				} /* switch */ 
 				break;
@@ -1530,61 +1530,61 @@ void drawmap(BYTE *screen,int dx,int dy,int type)
 } /* drawmap */ 
 
 
-void drawstats(BYTE *screen,int dx,int dy)
+void drawstats(BYTE *screen_byte,int dx,int dy)
 {
 	int i,val;
 	char tmp[80];
 
-	memset(screen+dx*TILE_SIZE_Y*3,0,dx*TILE_SIZE_Y);
+	memset(screen_byte+dx*TILE_SIZE_Y*3,0,dx*TILE_SIZE_Y);
 
 	tiles[stats_tile]->
-		draw(GAME_VIEW_X+TILE_SIZE_X*2,0,TILE_SIZE_X*30,TILE_SIZE_Y*3,screen,col_buffer,dx,dy,dx);
+		draw(GAME_VIEW_X+TILE_SIZE_X*2,0,TILE_SIZE_X*30,TILE_SIZE_Y*3,screen_byte,col_buffer,dx,dy,dx);
 
 	/* Flechas, monedas y llaves: */ 
 	sprintf(tmp,"%.3i",n_arrows);
-	tile_print(tmp,GAME_VIEW_X+TILE_SIZE_X*24,0,screen,dx,dy);
+	tile_print(tmp,GAME_VIEW_X+TILE_SIZE_X*24,0,screen_byte,dx,dy);
 	sprintf(tmp,"%.3i",n_coins);
-	tile_print(tmp,GAME_VIEW_X+TILE_SIZE_X*24,TILE_SIZE_Y,screen,dx,dy);
+	tile_print(tmp,GAME_VIEW_X+TILE_SIZE_X*24,TILE_SIZE_Y,screen_byte,dx,dy);
 	sprintf(tmp,"%.3i",n_keys);
-	tile_print(tmp,GAME_VIEW_X+TILE_SIZE_X*24,TILE_SIZE_Y*2,screen,dx,dy);
+	tile_print(tmp,GAME_VIEW_X+TILE_SIZE_X*24,TILE_SIZE_Y*2,screen_byte,dx,dy);
 
 	/* Armas: */ 
 	if (current_weapon==0) 
 		tiles[armas_tile]->
 			draw(GAME_VIEW_X+TILE_SIZE_X*28,TILE_SIZE_Y,
-				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen,col_buffer,dx,dy,dx);
+				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen_byte,col_buffer,dx,dy,dx);
 	if (current_weapon==1) 
 		tiles[armas_tile+1]->
 			draw(GAME_VIEW_X+TILE_SIZE_X*28,TILE_SIZE_Y,
-				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen,col_buffer,dx,dy,dx);
+				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen_byte,col_buffer,dx,dy,dx);
 	if (current_weapon==2) 
 		tiles[armas_tile+2]->
 			draw(GAME_VIEW_X+TILE_SIZE_X*28+TILE_UNIT*4,TILE_SIZE_Y,
-				TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+				TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 	if (current_weapon==3) 
 		tiles[armas_tile+3]->
 			draw(GAME_VIEW_X+TILE_SIZE_X*28+TILE_UNIT*4,TILE_SIZE_Y,
-				TILE_SIZE_X,TILE_SIZE_Y,screen,col_buffer,dx,dy,dx);
+				TILE_SIZE_X,TILE_SIZE_Y,screen_byte,col_buffer,dx,dy,dx);
 	if (current_weapon==4) 
 		tiles[armas_tile+4]->
 			draw(GAME_VIEW_X+TILE_SIZE_X*28,TILE_SIZE_Y,
-				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen,col_buffer,dx,dy,dx);
+				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen_byte,col_buffer,dx,dy,dx);
 	if (current_weapon==5) 
 		tiles[armas_tile+5]->
 			draw(GAME_VIEW_X+TILE_SIZE_X*28,TILE_SIZE_Y,
-				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen,col_buffer,dx,dy,dx);
+				TILE_SIZE_X*2,TILE_SIZE_Y*1,screen_byte,col_buffer,dx,dy,dx);
 
 	/* Mapa: */ 
 	if (map==0) {
-		tile_print("CASTLE",3*TILE_SIZE_X+GAME_VIEW_X,3*TILE_SIZE_Y,screen,dx,dy);
+		tile_print("CASTLE",3*TILE_SIZE_X+GAME_VIEW_X,3*TILE_SIZE_Y,screen_byte,dx,dy);
 	} else {
 		sprintf(tmp,"WORLD %i",map);
-		tile_print(tmp,3*TILE_SIZE_X+GAME_VIEW_X,3*TILE_SIZE_Y,screen,dx,dy);
+		tile_print(tmp,3*TILE_SIZE_X+GAME_VIEW_X,3*TILE_SIZE_Y,screen_byte,dx,dy);
 	} /* if */ 
 
 //	/* Debug: */ 
 //	sprintf(tmp,"%i %i %i %i",logic_dx[1],logic_dy[1],logic_x[1],logic_y[1]);
-//	tile_print(tmp,10*TILE_SIZE_X+GAME_VIEW_X,3*TILE_SIZE_Y,screen,dx,dy);
+//	tile_print(tmp,10*TILE_SIZE_X+GAME_VIEW_X,3*TILE_SIZE_Y,screen_byte,dx,dy);
 
 	/* EnergÌa: */ 
 	for(i=0;i<2;i++) {
@@ -1596,99 +1596,99 @@ void drawstats(BYTE *screen,int dx,int dy)
 	} /* for */ 
 
 	val=min(player_max[0],96);
-	B_rectangle(screen,112+val,20,2,8,dx,235);
+	B_rectangle(screen_byte,112+val,20,2,8,dx,235);
 	val=max(0,min(player_denergy[0],96));
-	B_rectangle(screen,112,20,val,8,dx,47);
+	B_rectangle(screen_byte,112,20,val,8,dx,47);
 	if (player_dexperience[0]>0) {
 		val=min(player_dexperience[0],96);
-		B_rectangle(screen,112,36,val,8,dx,47);
+		B_rectangle(screen_byte,112,36,val,8,dx,47);
 	} /* if */ 
 
 	val=min(player_max[1],96);
-	B_rectangle(screen,288+val,20,2,8,dx,235);
+	B_rectangle(screen_byte,288+val,20,2,8,dx,235);
 	val=max(min(player_denergy[1],96),0);
-	B_rectangle(screen,288,20,val,8,dx,194);
+	B_rectangle(screen_byte,288,20,val,8,dx,194);
 	if (player_dexperience[1]>0) {
 		val=min(player_dexperience[1],96);
-		B_rectangle(screen,288,36,val,8,dx,194);
+		B_rectangle(screen_byte,288,36,val,8,dx,194);
 	} /* if */ 
 
 
 /*
 	sprintf(tmp,"ST: %i",pers_state);
-	tile_print(tmp,0,0,screen,dx,dy);
+	tile_print(tmp,0,0,screen_byte,dx,dy);
 	sprintf(tmp,"X: %i",pers_x);
-	tile_print(tmp,0,TILE_SIZE_Y,screen,dx,dy);
+	tile_print(tmp,0,TILE_SIZE_Y,screen_byte,dx,dy);
 */ 
 
 } /* drawstats */ 
 
 
-void tile_print(char *str,int x,int y,BYTE *screen,int dx,int dy)
+void tile_print(char *str,int x,int y,BYTE *screen_byte,int dx,int dy)
 {
 	int i;
 
 	for(i=0;str[i]!=0;i++) {
 		if (str[i]>='A' && str[i]<='Z') {
-			tiles_bmp->draw_sprite((str[i]-'A')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+			tiles_bmp->draw_sprite((str[i]-'A')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 		} /* if */ 
 		if (str[i]>='0' && str[i]<='9') {
-			tiles_bmp->draw_sprite((26+str[i]-'0')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+			tiles_bmp->draw_sprite((26+str[i]-'0')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 		} /* if */ 
-		if (str[i]=='[') tiles_bmp->draw_sprite(36*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]==']') tiles_bmp->draw_sprite(37*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]==':') tiles_bmp->draw_sprite(38*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='\\') tiles_bmp->draw_sprite(39*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='!') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='?') tiles_bmp->draw_sprite(2*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]==',') tiles_bmp->draw_sprite(3*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='.') tiles_bmp->draw_sprite(4*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='\'') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='-') tiles_bmp->draw_sprite(TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+		if (str[i]=='[') tiles_bmp->draw_sprite(36*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]==']') tiles_bmp->draw_sprite(37*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]==':') tiles_bmp->draw_sprite(38*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='\\') tiles_bmp->draw_sprite(39*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='!') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='?') tiles_bmp->draw_sprite(2*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]==',') tiles_bmp->draw_sprite(3*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='.') tiles_bmp->draw_sprite(4*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='\'') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='-') tiles_bmp->draw_sprite(TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 		/* Graphical symbols */ 
-		if (str[i]=='a') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='b') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='c') tiles_bmp->draw_sprite(23*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='d') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='e') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='f') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='g') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='h') tiles_bmp->draw_sprite(5*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+		if (str[i]=='a') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='b') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='c') tiles_bmp->draw_sprite(23*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='d') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='e') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='f') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='g') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='h') tiles_bmp->draw_sprite(5*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 	} /* for */ 
 } /* tile_print */ 
 
 
-void tile_print2(char *str,int x,int y,BYTE *screen,int dx,int dy)
+void tile_print2(char *str,int x,int y,BYTE *screen_byte,int dx,int dy)
 {
 	int i;
 
 	for(i=0;str[i]!=0;i++) {
-		B_rectangle(screen,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,dx,0);
+		B_rectangle(screen_byte,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,dx,0);
 		if (str[i]>='A' && str[i]<='Z') {
-			tiles_bmp->draw_sprite((str[i]-'A')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+			tiles_bmp->draw_sprite((str[i]-'A')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 		} /* if */ 
 		if (str[i]>='0' && str[i]<='9') {
-			tiles_bmp->draw_sprite((26+str[i]-'0')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+			tiles_bmp->draw_sprite((26+str[i]-'0')*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 		} /* if */ 
-		if (str[i]=='[') tiles_bmp->draw_sprite(36*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]==']') tiles_bmp->draw_sprite(37*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]==':') tiles_bmp->draw_sprite(38*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='\\') tiles_bmp->draw_sprite(39*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='!') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='?') tiles_bmp->draw_sprite(2*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]==',') tiles_bmp->draw_sprite(3*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='.') tiles_bmp->draw_sprite(4*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='\'') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='-') tiles_bmp->draw_sprite(TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+		if (str[i]=='[') tiles_bmp->draw_sprite(36*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]==']') tiles_bmp->draw_sprite(37*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]==':') tiles_bmp->draw_sprite(38*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='\\') tiles_bmp->draw_sprite(39*TILE_SIZE_X,TILE_SIZE_Y*12,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='!') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='?') tiles_bmp->draw_sprite(2*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]==',') tiles_bmp->draw_sprite(3*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='.') tiles_bmp->draw_sprite(4*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='\'') tiles_bmp->draw_sprite(0,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='-') tiles_bmp->draw_sprite(TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 		/* Graphical symbols: */ 
-		if (str[i]=='a') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='b') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='c') tiles_bmp->draw_sprite(23*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='d') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='e') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='f') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='g') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
-		if (str[i]=='h') tiles_bmp->draw_sprite(5*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen,dx,dy,dx);
+		if (str[i]=='a') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='b') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='c') tiles_bmp->draw_sprite(23*TILE_SIZE_X,TILE_SIZE_Y*22,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='d') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='e') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*23,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='f') tiles_bmp->draw_sprite(21*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='g') tiles_bmp->draw_sprite(22*TILE_SIZE_X,TILE_SIZE_Y*24,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
+		if (str[i]=='h') tiles_bmp->draw_sprite(5*TILE_SIZE_X,TILE_SIZE_Y*21,TILE_SIZE_X,TILE_SIZE_Y,x+i*TILE_SIZE_X,y,TILE_SIZE_X,TILE_SIZE_Y,screen_byte,dx,dy,dx);
 	} /* for */ 
 } /* tile_print2 */ 
 
@@ -2820,7 +2820,7 @@ bool typed_word_p(char *word)
 } /* typed_word_p */ 
 
 
-void draw_items_map(int map,int map_x,int map_y,bool selfindicator,unsigned char *screen,int dx,int dy)
+void draw_items_map(int map,int map_x,int map_y,bool selfindicator,unsigned char *screen_byte,int dx,int dy)
 {
 	int offs[10]={3,0,2,1,0,1,1,1,2,2};
 	int i=0,j=0;
@@ -2938,7 +2938,7 @@ void draw_items_map(int map,int map_x,int map_y,bool selfindicator,unsigned char
 		for(j=0;j<9;j++) {
 			for(i=0;i<9;i++) {
 				if (maps[map-1][i+j*10]==1) {
-					B_rectangle(screen,
+					B_rectangle(screen_byte,
 								GAME_VIEW_X+TILE_SIZE_X*3+(offs[map-1]+i)*TILE_SIZE_X,
 								GAME_VIEW_Y+15*TILE_SIZE_Y+j*TILE_SIZE_Y/2,
 								TILE_SIZE_X-TILE_UNIT,TILE_SIZE_X/2-TILE_UNIT,dx,255);
@@ -2951,7 +2951,7 @@ void draw_items_map(int map,int map_x,int map_y,bool selfindicator,unsigned char
 	if (map==1) {
 		i=0;
 		j=6;
-		B_rectangle(screen,
+		B_rectangle(screen_byte,
 					GAME_VIEW_X+TILE_SIZE_X*3+(offs[map-1]+i)*TILE_SIZE_X,
 					GAME_VIEW_Y+15*TILE_SIZE_Y+j*TILE_SIZE_Y/2,
 					TILE_SIZE_X-TILE_UNIT,TILE_SIZE_X/2-TILE_UNIT,dx,255);
@@ -2969,7 +2969,7 @@ void draw_items_map(int map,int map_x,int map_y,bool selfindicator,unsigned char
 		if (map==8) {i=6;j=4;}
 		if (map==9) {i=0;j=0;}
 		if (map==10) {i=4;j=0;}
-		B_rectangle(screen,
+		B_rectangle(screen_byte,
 					GAME_VIEW_X+TILE_SIZE_X*3+(offs[map-1]+i)*TILE_SIZE_X,
 					GAME_VIEW_Y+15*TILE_SIZE_Y+j*TILE_SIZE_Y/2,
 					TILE_SIZE_X-TILE_UNIT,TILE_SIZE_X/2-TILE_UNIT,dx,64);
@@ -2978,7 +2978,7 @@ void draw_items_map(int map,int map_x,int map_y,bool selfindicator,unsigned char
 	if (selfindicator) {
 		i=map_x;
 		j=map_y;
-		B_rectangle(screen,
+		B_rectangle(screen_byte,
 					GAME_VIEW_X+TILE_SIZE_X*3+(offs[map-1]+i)*TILE_SIZE_X,
 					GAME_VIEW_Y+15*TILE_SIZE_Y+j*TILE_SIZE_Y/2,
 					TILE_SIZE_X-TILE_UNIT,TILE_SIZE_X/2-TILE_UNIT,dx,180);
