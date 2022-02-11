@@ -27,8 +27,6 @@
 
 #include "debug.h"
 
-#define MOG_WINDOW_TITLE "Maze of Galious v0.63"
-
 extern void DebugReport(void);
 
 int SCREEN_X = 640;
@@ -94,6 +92,8 @@ int main(int argc, char** argv)
 	int time, act_time;
 	SDL_Event event;
     bool quit = false;
+
+	printf("Starting %s ...\n", MOG_WINDOW_TITLE);
 
 #ifdef __APPLE__
     setupWorkingDirectory();

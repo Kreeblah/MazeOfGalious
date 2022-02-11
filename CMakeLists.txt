@@ -4,6 +4,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 set(MOG_VERSION "0.63")
 
+add_compile_definitions(MOG_WINDOW_TITLE="Maze of Galious ${MOG_VERSION}")
+
 set(SHARED_SOURCES
 	sources/MOGtypes.h
 	sources/bitmaps.cpp
