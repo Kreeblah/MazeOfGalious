@@ -112,7 +112,7 @@ int currently_selecting=0;	/* Sirve para saber si se está seleccionando	*/
 							/* personaje o arma.							*/ 
 bool shop_item[3];
 int passage_state=0;
-unsigned char old_keyboard[SDLK_LAST]={
+unsigned char old_keyboard[SDL_NUM_SCANCODES]={
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -297,9 +297,9 @@ int zoom=640;
 
 
 /* Teclas: */ 
-SDLKey UP_KEY=SDLK_q,DOWN_KEY=SDLK_a,LEFT_KEY=SDLK_o,RIGHT_KEY=SDLK_p;
-SDLKey SWORD_KEY=SDLK_SPACE,WEAPON_KEY=SDLK_m,ITEM_KEY=SDLK_F1,PAUSE_KEY=SDLK_F2;
-SDLKey last_word[16];
+SDL_KeyCode UP_KEY=SDLK_q,DOWN_KEY=SDLK_a,LEFT_KEY=SDLK_o,RIGHT_KEY=SDLK_p;
+SDL_KeyCode SWORD_KEY=SDLK_SPACE,WEAPON_KEY=SDLK_m,ITEM_KEY=SDLK_F1,PAUSE_KEY=SDLK_F2;
+SDL_KeyCode last_word[16];
 
 char password[48]="UR3FUR3FUR4F423RUR3FUR3FUR3FUR3FUR3FUR3FURS48";
 int password_pos;
@@ -326,7 +326,7 @@ void GameCycle(BYTE *screen,int dx,int dy)
 	unsigned char *keyboard;
 
 	SDL_PumpEvents();
-	keyboard = (unsigned char *)SDL_GetKeyState(NULL);
+	keyboard = (unsigned char *)SDL_GetKeyboardState(NULL);
 
 	frame_counter++;
 
@@ -1288,42 +1288,42 @@ void GameCycle(BYTE *screen,int dx,int dy)
 					tile_print("PRESS A KEY FOR UP:",TILE_SIZE_X*2,TILE_SIZE_Y*2,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=1) { 
-					sprintf(tmp,SDL_GetKeyName((SDLKey)UP_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)UP_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*2,screen,dx,dy);
 					tile_print("PRESS A KEY FOR DOWN:",TILE_SIZE_X*2,TILE_SIZE_Y*4,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=2) { 
-					sprintf(tmp,SDL_GetKeyName((SDLKey)DOWN_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)DOWN_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*4,screen,dx,dy);
 					tile_print("PRESS A KEY FOR LEFT:",TILE_SIZE_X*2,TILE_SIZE_Y*6,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=3) {  
-					sprintf(tmp,SDL_GetKeyName((SDLKey)LEFT_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)LEFT_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*6,screen,dx,dy);
 					tile_print("PRESS A KEY FOR RIGHT:",TILE_SIZE_X*2,TILE_SIZE_Y*8,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=4) { 
-					sprintf(tmp,SDL_GetKeyName((SDLKey)RIGHT_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)RIGHT_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*8,screen,dx,dy);
 					tile_print("PRESS A KEY FOR SWORD:",TILE_SIZE_X*2,TILE_SIZE_Y*10,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=5) { 
-					sprintf(tmp,SDL_GetKeyName((SDLKey)SWORD_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)SWORD_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*10,screen,dx,dy);
 					tile_print("PRESS A KEY FOR WEAPON:",TILE_SIZE_X*2,TILE_SIZE_Y*12,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=6) { 
-					sprintf(tmp,SDL_GetKeyName((SDLKey)WEAPON_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)WEAPON_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*12,screen,dx,dy);
 					tile_print("PRESS A KEY FOR ITEM:",TILE_SIZE_X*2,TILE_SIZE_Y*14,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=7) {
-					sprintf(tmp,SDL_GetKeyName((SDLKey)ITEM_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)ITEM_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*14,screen,dx,dy);
 					tile_print("PRESS A KEY FOR PAUSE:",TILE_SIZE_X*2,TILE_SIZE_Y*16,screen,dx,dy);
 				} /* if */ 
 				if (SUBSTATE>=8) { 
-					sprintf(tmp,SDL_GetKeyName((SDLKey)PAUSE_KEY));
+					sprintf(tmp,SDL_GetKeyName((SDL_KeyCode)PAUSE_KEY));
 					tile_print(strupr(tmp),TILE_SIZE_X*26,TILE_SIZE_Y*16,screen,dx,dy);
 				} /* if */ 
 
@@ -1332,38 +1332,38 @@ void GameCycle(BYTE *screen,int dx,int dy)
 				tile_print("TO CHANGE THE ZOOM:         PGUP:PGDN",TILE_SIZE_X*2,TILE_SIZE_Y*20,screen,dx,dy);
 
 				found=false;
-				for(i=0;!found && i<SDLK_LAST;i++) {
+				for(i=0;!found && i<SDL_NUM_SCANCODES;i++) {
 					if (keyboard[i] && !old_keyboard[i]) {
 						switch(SUBSTATE) {
-						case 0:UP_KEY=(SDLKey)i;
+						case 0:UP_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 1:DOWN_KEY=(SDLKey)i;
+						case 1:DOWN_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 2:LEFT_KEY=(SDLKey)i;
+						case 2:LEFT_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 3:RIGHT_KEY=(SDLKey)i;
+						case 3:RIGHT_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 4:SWORD_KEY=(SDLKey)i;
+						case 4:SWORD_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 5:WEAPON_KEY=(SDLKey)i;
+						case 5:WEAPON_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 6:ITEM_KEY=(SDLKey)i;
+						case 6:ITEM_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
-						case 7:PAUSE_KEY=(SDLKey)i;
+						case 7:PAUSE_KEY=(SDL_KeyCode)i;
 							   SUBSTATE++;
 							   found=true;
 							   break;
@@ -2229,7 +2229,7 @@ void GameCycle(BYTE *screen,int dx,int dy)
 					"    ORIGINALLY AT  1987",
 					"",
 					"    REMAKE PRESENTED BY ",
-					"   SANTI ONTAÑON AT 2002"};
+					"   SANTI ONTANON AT 2002"};
 
 
 				if (SUBSTATE<(512+27*TILE_SIZE_Y)) y=27*TILE_SIZE_Y-(SUBSTATE-512);
@@ -2354,7 +2354,7 @@ void GameCycle(BYTE *screen,int dx,int dy)
 	} /* if */ 
 
 	/* Viejo estado del teclado: */ 
-	for(int i=0;i<SDLK_LAST;i++) old_keyboard[i]=keyboard[i];
+	for(int i=0;i<SDL_NUM_SCANCODES;i++) old_keyboard[i]=keyboard[i];
 
 	cycle++;
 } /* GameCycle */ 

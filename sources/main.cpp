@@ -102,9 +102,9 @@ int main(int argc, char** argv)
 #ifdef __APPLE__
                     // different quit shortcut on OSX: apple+Q
                     if (event.key.keysym.sym == SDLK_q) {
-                        SDLMod modifiers;
+                        SDL_Keymod modifiers;
                         modifiers = SDL_GetModState();
-                        if ((modifiers&KMOD_META) != 0) {
+                        if ((modifiers&KMOD_GUI) != 0) {
                             quit = true;
                         }
                     }
@@ -112,7 +112,7 @@ int main(int argc, char** argv)
 #ifdef _WIN32
                     // different quit shortcut on WIN32: ALT+F4
                     if (event.key.keysym.sym == SDLK_F4) {
-                        SDLMod modifiers;
+                        SDL_Keymod modifiers;
                         modifiers = SDL_GetModState();
                         if ((modifiers&KMOD_ALT) != 0) {
                             quit = true;
@@ -131,9 +131,9 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 
 #ifdef __APPLE__
                     if (event.key.keysym.sym == SDLK_f) {
-                        SDLMod modifiers;
+                        SDL_Keymod modifiers;
                         modifiers = SDL_GetModState();
-                        if ((modifiers&KMOD_META) != 0) {
+                        if ((modifiers&KMOD_GUI) != 0) {
 							fullscreen = (fullscreen ? false : true);
 							SDL_QuitSubSystem(SDL_INIT_VIDEO);
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
@@ -349,8 +349,6 @@ SDL_Surface* initializeSDL(int moreflags)
 		}
 	    output_debug_message("\n");
     }
-	
-	SDL_EnableUNICODE(1);
 	
 	return screen;
 }

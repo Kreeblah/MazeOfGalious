@@ -43,7 +43,7 @@ extern bool sword;				/* Hay que dibujar la espada?	*/
 extern bool old_sword;
 extern int sword_x,sword_y;	/* Coordenadas de la espada.	*/ 
 extern int sword_time;
-extern unsigned char old_keyboard[SDLK_LAST];
+extern unsigned char old_keyboard[SDL_NUM_SCANCODES];
 extern int in_ladder;			/* En qué escalera está el personaje	*/ 
 extern bool previous_x_collision;	/* Hubo una colisión en X en el frame anterior? */ 
 extern bool previous_y_collision;	/* Hubo una colisión en Y en el frame anterior? */ 
@@ -127,8 +127,8 @@ extern int zoom;
 
 
 /* Teclas: */ 
-extern SDLKey UP_KEY,DOWN_KEY,LEFT_KEY,RIGHT_KEY;
-extern SDLKey SWORD_KEY,WEAPON_KEY,ITEM_KEY,PAUSE_KEY;
+extern SDL_KeyCode UP_KEY,DOWN_KEY,LEFT_KEY,RIGHT_KEY;
+extern SDL_KeyCode SWORD_KEY,WEAPON_KEY,ITEM_KEY,PAUSE_KEY;
 
 
 
@@ -152,7 +152,7 @@ void GameInGameCycle(int dx,int dy)
 	bool invert_move=false;
 
 	if (map==8 && !item[6]) {
-		SDLKey tmp;
+		SDL_KeyCode tmp;
 		invert_move=true;
 
 		tmp=LEFT_KEY;
@@ -161,7 +161,7 @@ void GameInGameCycle(int dx,int dy)
 	} /* if */ 
 
 	SDL_PumpEvents();
-	keyboard = (unsigned char *)SDL_GetKeyState(NULL);
+	keyboard = (unsigned char *)SDL_GetKeyboardState(NULL);
 
 	/* Mascara de colisión: */ 
 	if (in_ladder==-1) colision=T_WALL|T_LADDER_WALL|T_DOOR_WALL;
@@ -2337,7 +2337,7 @@ void GameInGameCycle(int dx,int dy)
 	} /* if */ 
 
 	if (invert_move) {
-		SDLKey tmp;
+		SDL_KeyCode tmp;
 		tmp=LEFT_KEY;
 		LEFT_KEY=RIGHT_KEY;
 		RIGHT_KEY=tmp;

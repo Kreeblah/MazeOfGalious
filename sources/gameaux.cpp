@@ -154,7 +154,7 @@ extern int HP_obj_type[HP_OBJS_MAX];
 extern int HP_obj_aux[HP_OBJS_MAX];
 
 /* Teclado: */ 
-extern unsigned char old_keyboard[SDLK_LAST];
+extern unsigned char old_keyboard[SDL_NUM_SCANCODES];
 
 /* Efectos de sonido: */ 
 extern SOUNDT S_pause,S_death,S_gameover,S_worldkey,S_entering;
@@ -183,9 +183,9 @@ extern int zoom;
 
 
 /* Teclas: */ 
-extern SDLKey UP_KEY,DOWN_KEY,LEFT_KEY,RIGHT_KEY;
-extern SDLKey SWORD_KEY,WEAPON_KEY,ITEM_KEY,PAUSE_KEY;
-extern SDLKey last_word[16];
+extern SDL_KeyCode UP_KEY,DOWN_KEY,LEFT_KEY,RIGHT_KEY;
+extern SDL_KeyCode SWORD_KEY,WEAPON_KEY,ITEM_KEY,PAUSE_KEY;
+extern SDL_KeyCode last_word[16];
 
 extern char password[48];
 
@@ -2572,16 +2572,16 @@ bool cargar_configuracion(char *filename)
 
 	/* Keyboard configuration: */ 
 	if (4!=fscanf(fp,"%i %i %i %i",&itmp[0],&itmp[1],&itmp[2],&itmp[3])) return false;
-	UP_KEY = (SDLKey) itmp[0];
-	DOWN_KEY = (SDLKey) itmp[1];
-	LEFT_KEY = (SDLKey) itmp[2];
-	RIGHT_KEY = (SDLKey) itmp[3];
+	UP_KEY = (SDL_KeyCode) itmp[0];
+	DOWN_KEY = (SDL_KeyCode) itmp[1];
+	LEFT_KEY = (SDL_KeyCode) itmp[2];
+	RIGHT_KEY = (SDL_KeyCode) itmp[3];
 
 	if (4!=fscanf(fp,"%i %i %i %i",&itmp[0],&itmp[1],&itmp[2],&itmp[3])) return false;
-	SWORD_KEY = (SDLKey) itmp[0];
-	WEAPON_KEY = (SDLKey) itmp[1];
-	ITEM_KEY = (SDLKey) itmp[2];
-	PAUSE_KEY = (SDLKey) itmp[3];
+	SWORD_KEY = (SDL_KeyCode) itmp[0];
+	WEAPON_KEY = (SDL_KeyCode) itmp[1];
+	ITEM_KEY = (SDL_KeyCode) itmp[2];
+	PAUSE_KEY = (SDL_KeyCode) itmp[3];
 
 	/* Graphics path: */ 
 	fscanf(fp,"%s",tmp);
@@ -2788,11 +2788,11 @@ void check_typed_word(void)
 	BYTE *keyboard;
 
 	SDL_PumpEvents();
-	keyboard = (unsigned char *)SDL_GetKeyState(NULL);
+	keyboard = (unsigned char *)SDL_GetKeyboardState(NULL);
 
-	SDLKey i;
+	SDL_KeyCode i;
 	int j;
-	for(i=SDLK_a;i<=SDLK_z;i=SDLKey(int(i)+1)) {
+	for(i=SDLK_a;i<=SDLK_z;i=SDL_KeyCode(int(i)+1)) {
 		if (keyboard[i] && !old_keyboard[i]) {
 			for(j=15;j>0;j--) last_word[j]=last_word[j-1];
 			last_word[0]=i;
@@ -2812,7 +2812,7 @@ bool typed_word_p(char *word)
 
 	for(i=0;i<l;i++) {
 		c=word[(l-1)-i];
-		str=SDL_GetKeyName(last_word[i]);
+		const char* str=SDL_GetKeyName(last_word[i]);
 		if (str[1]!=0 || str[0]!=c) return false;
 	} /* for */ 
 
@@ -3033,13 +3033,13 @@ void get_palette(void)
 	sprintf(tmp,"%skonami.pcx",g_path);
 	img = IMG_Load(tmp);
 	if (img!=0) {
-		SDL_SetColors(screen, img->format->palette->colors, 0, img->format->palette->ncolors);
+		SDL_SetPaletteColors(screen->format->palette, img->format->palette->colors, 0, img->format->palette->ncolors);
 		SDL_FreeSurface(img);
 	} else {
 		sprintf(tmp,"%skonami.pcx",default_g_path);
 		img = IMG_Load(tmp);
 		if (img!=0) {
-			SDL_SetColors(screen, img->format->palette->colors, 0, img->format->palette->ncolors);
+			SDL_SetPaletteColors(screen->format->palette, img->format->palette->colors, 0, img->format->palette->ncolors);
 			SDL_FreeSurface(img);
 		} /* if */ 
 	} /* if */ 

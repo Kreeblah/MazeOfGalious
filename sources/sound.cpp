@@ -34,7 +34,7 @@ char music_realfiles[8][128];	/* File names including music directory */
 
 bool Sound_initialization(void)
 {
-    char SoundcardName[256];
+    const char* SoundcardName = SDL_GetCurrentAudioDriver();
 	int audio_rate = 44100;
 	int audio_channels = 2;
 	int audio_bufsize = AUDIO_BUFFER;
@@ -50,7 +50,6 @@ bool Sound_initialization(void)
 	  return false;	
 	} /* if */ 
 
-	SDL_AudioDriverName (SoundcardName, sizeof (SoundcardName));
 	Mix_QuerySpec (&audio_rate, &audio_format, &audio_channels);
 	fprintf (stderr, "    opened %s at %d Hz %d bit %s, %d bytes audio buffer\n",
 			 SoundcardName, audio_rate, audio_format & 0xFF,
