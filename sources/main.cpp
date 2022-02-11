@@ -6,6 +6,13 @@
 #include <time.h>
 #endif
 
+#ifdef __APPLE__
+#include <sys/syslimits.h>
+#include <unistd.h>
+#include <assert.h>
+#include <CoreFoundation/CFBundle.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "SDL.h"
@@ -67,6 +74,7 @@ SDL_Renderer *sdlRenderer;
 
 void Render(SDL_Surface *surface);
 SDL_Window* initializeSDL(int flags);
+void setupWorkingDirectory();
 void finalizeSDL();
 
 #ifdef _WIN32
@@ -81,6 +89,10 @@ int main(int argc, char** argv)
 	int time, act_time;
 	SDL_Event event;
     bool quit = false;
+
+#ifdef __APPLE__
+    setupWorkingDirectory();
+#endif
 
 	screen = initializeSDL((fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 
@@ -286,6 +298,23 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 	return 0;
 }
 
+
+#ifdef __APPLE__
+void setupWorkingDirectory()
+{
+	CFURLRef resourceURL = CFBundleCopyResourcesDirectoryURL(CFBundleGetMainBundle());
+	char resourcePath[PATH_MAX];
+	if (CFURLGetFileSystemRepresentation(resourceURL, true, (UInt8 *)resourcePath, PATH_MAX))
+	{
+		if (resourceURL != NULL)
+		{
+			CFRelease(resourceURL);
+		}
+
+		assert ( chdir ((const char*)resourcePath) == 0 );
+	}
+}
+#endif
 
 SDL_Window* initializeSDL(int moreflags)
 {

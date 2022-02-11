@@ -122,6 +122,8 @@ if (APPLE)
 		set_property(SOURCE ${SOUND_RES_FILE} PROPERTY MACOSX_PACKAGE_LOCATION "Resources/sound/${SOUND_RES_PATH_STRIPPED}")
 	endforeach(SOUND_RES_FILE)
 
+	target_link_libraries(MazeOfGalious "-framework CoreFoundation")
+
 	set_target_properties(MazeOfGalious PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Maze of Galious")
 	set_target_properties(MazeOfGalious PROPERTIES MACOSX_BUNDLE_EXECUTABLE_NAME "${MACOSX_BUNDLE_BUNDLE_NAME}")
 	set_target_properties(MazeOfGalious PROPERTIES MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/build/osx/Info.plist.in")
