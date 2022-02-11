@@ -74,7 +74,9 @@ SDL_Renderer *sdlRenderer;
 
 void Render(SDL_Surface *surface);
 SDL_Window* initializeSDL(int flags);
+#ifdef __APPLE__
 void setupWorkingDirectory();
+#endif
 void finalizeSDL();
 
 #ifdef _WIN32
