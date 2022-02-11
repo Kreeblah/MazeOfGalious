@@ -15,7 +15,7 @@
 #include "mog.h"
 
 
-extern SDL_Surface *screen;
+extern SDL_Window *screen;
 
 /* Paths: */ 
 

@@ -31,7 +31,7 @@ extern char *s_path;
 extern Bitmap *konami_bmp,*menu_bmp,*tiles_bmp,*tiles2_bmp,*enemy_bmp,*enemy2_bmp,*final_bmp;
 extern int n_tiles;
 extern CTile **tiles;
-extern SDL_Surface *screen;
+extern SDL_Window *screen;
 
 extern BYTE *col_buffer;
 
@@ -3033,13 +3033,13 @@ void get_palette(void)
 	sprintf(tmp,"%skonami.pcx",g_path);
 	img = IMG_Load(tmp);
 	if (img!=0) {
-		SDL_SetPaletteColors(screen->format->palette, img->format->palette->colors, 0, img->format->palette->ncolors);
+		SDL_SetPaletteColors(SDL_GetWindowSurface(screen)->format->palette, img->format->palette->colors, 0, img->format->palette->ncolors);
 		SDL_FreeSurface(img);
 	} else {
 		sprintf(tmp,"%skonami.pcx",default_g_path);
 		img = IMG_Load(tmp);
 		if (img!=0) {
-			SDL_SetPaletteColors(screen->format->palette, img->format->palette->colors, 0, img->format->palette->ncolors);
+			SDL_SetPaletteColors(SDL_GetWindowSurface(screen)->format->palette, img->format->palette->colors, 0, img->format->palette->ncolors);
 			SDL_FreeSurface(img);
 		} /* if */ 
 	} /* if */ 
