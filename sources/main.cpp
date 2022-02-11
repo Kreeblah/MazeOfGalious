@@ -27,6 +27,8 @@
 
 #include "debug.h"
 
+#define MOG_WINDOW_TITLE "Maze of Galious v0.63"
+
 extern void DebugReport(void);
 
 int SCREEN_X = 640;
@@ -155,7 +157,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
 							
 							if (SDL_WasInit(SDL_INIT_VIDEO)) {
-								screen = SDL_CreateWindow("Maze of Galious v0.63", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+								screen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 								
 								if (screen == NULL) {
 									output_debug_message("Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -192,7 +194,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
 							
 							if (SDL_WasInit(SDL_INIT_VIDEO)) {
-								screen = SDL_CreateWindow("Maze of Galious v0.63", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+								screen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 								
 								if (screen == NULL) {
 									output_debug_message( "Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -327,7 +329,7 @@ void setupWorkingDirectory()
 SDL_Window* initializeSDL(int moreflags)
 {
 	const char* VideoName = SDL_GetCurrentVideoDriver();
-	SDL_Window *screen;
+	SDL_Window *localScreen;
 
 	int flags = moreflags;
 
@@ -368,9 +370,9 @@ SDL_Window* initializeSDL(int moreflags)
 
 	pause(1000);
 
-	screen = SDL_CreateWindow("Maze of Galious v0.63", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, flags|(fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+	localScreen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, flags|(fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 
-	if (screen == NULL) {
+	if (localScreen == NULL) {
 		output_debug_message( "Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
 	    if (fullscreen) {
 			output_debug_message( ",fullscreen,");
@@ -379,18 +381,18 @@ SDL_Window* initializeSDL(int moreflags)
 	    exit(-1);
 	} else {
 	    output_debug_message( "Set the video resolution to: %ix%ix%i",
-				 SDL_GetWindowSurface(screen)->w, SDL_GetWindowSurface(screen)->h,
-				 SDL_GetWindowSurface(screen)->format->BitsPerPixel);
+				 SDL_GetWindowSurface(localScreen)->w, SDL_GetWindowSurface(localScreen)->h,
+				 SDL_GetWindowSurface(localScreen)->format->BitsPerPixel);
 	    if (fullscreen) {
 			output_debug_message( ",fullscreen");
 		}
 	    output_debug_message("\n");
     }
 	
-	sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
+	sdlRenderer = SDL_CreateRenderer(localScreen, -1, 0);
 	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
 												
-	return screen;
+	return localScreen;
 }
 
 void finalizeSDL()
