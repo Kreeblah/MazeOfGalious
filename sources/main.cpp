@@ -157,7 +157,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
 							
 							if (SDL_WasInit(SDL_INIT_VIDEO)) {
-								screen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+								screen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
 								
 								if (screen == NULL) {
 									output_debug_message("Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -178,7 +178,13 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 
 								sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
 								sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
-												
+
+								if(fullscreen)
+								{
+									SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+									SDL_RenderSetLogicalSize(sdlRenderer, SCREEN_X, SCREEN_Y);
+								}
+
 								get_palette();
 							} else {
 								quit = true;
@@ -194,7 +200,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
 							
 							if (SDL_WasInit(SDL_INIT_VIDEO)) {
-								screen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+								screen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
 								
 								if (screen == NULL) {
 									output_debug_message( "Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -215,7 +221,13 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 												
 								sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
 								sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
-												
+
+								if(fullscreen)
+								{
+									SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+									SDL_RenderSetLogicalSize(sdlRenderer, SCREEN_X, SCREEN_Y);
+								}
+
 								get_palette();
 							} else {
 								quit = true;
@@ -370,7 +382,7 @@ SDL_Window* initializeSDL(int moreflags)
 
 	pause(1000);
 
-	localScreen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, flags|(fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
+	localScreen = SDL_CreateWindow(MOG_WINDOW_TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, flags|(fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0));
 
 	if (localScreen == NULL) {
 		output_debug_message( "Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -392,6 +404,12 @@ SDL_Window* initializeSDL(int moreflags)
 	sdlRenderer = SDL_CreateRenderer(localScreen, -1, 0);
 	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
 												
+	if(fullscreen)
+	{
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+		SDL_RenderSetLogicalSize(sdlRenderer, SCREEN_X, SCREEN_Y);
+	}
+
 	return localScreen;
 }
 
