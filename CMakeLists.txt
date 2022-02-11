@@ -43,8 +43,8 @@ set(SHARED_SOURCES
 )
 
 set(MAC_SOURCES
-	"build/osx/Maze of Galious/SDLMain.h"
-	"build/osx/Maze of Galious/SDLMain.m"
+#	"build/osx/Maze of Galious/SDLMain.h"
+#	"build/osx/Maze of Galious/SDLMain.m"
 )
 
 set(SHARED_LIBS

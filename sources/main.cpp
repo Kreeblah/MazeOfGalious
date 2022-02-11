@@ -62,10 +62,11 @@ void pause(unsigned int time)
 
 /* Pantalla: */ 
 
-SDL_Surface *screen;
+SDL_Window *screen;
+SDL_Renderer *sdlRenderer;
 
 void Render(SDL_Surface *surface);
-SDL_Surface* initializeSDL(int flags);
+SDL_Window* initializeSDL(int flags);
 void finalizeSDL();
 
 #ifdef _WIN32
@@ -81,7 +82,7 @@ int main(int argc, char** argv)
 	SDL_Event event;
     bool quit = false;
 
-	screen = initializeSDL((fullscreen ? SDL_FULLSCREEN : 0));
+	screen = initializeSDL((fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 
 	if (screen == 0) {
 		return 0;
@@ -91,7 +92,7 @@ int main(int argc, char** argv)
 
 	GameInit(SCREEN_X, SCREEN_Y);
 
-	SDL_FillRect(screen, NULL, 0);
+	SDL_FillRect(SDL_GetWindowSurface(screen), NULL, 0);
 	while (!quit) {
 	
 		while(SDL_PollEvent(&event)) {
@@ -139,7 +140,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
 							
 							if (SDL_WasInit(SDL_INIT_VIDEO)) {
-								screen = SDL_SetVideoMode(SCREEN_X, SCREEN_Y, COLOUR_DEPTH, SDL_HWPALETTE|(fullscreen ? SDL_FULLSCREEN : 0));
+								screen = SDL_CreateWindow("Maze of Galious v0.63", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 								
 								if (screen == NULL) {
 									output_debug_message("Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -150,15 +151,16 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 									quit = true;
 								} else {
 									output_debug_message( "Set the video resolution to: %ix%ix%i",
-										SDL_GetVideoSurface()->w, SDL_GetVideoSurface()->h,
-										SDL_GetVideoSurface()->format->BitsPerPixel);
+										SDL_GetWindowSurface(screen)->w, SDL_GetWindowSurface(screen)->h,
+										SDL_GetWindowSurface(screen)->format->BitsPerPixel);
 									if (fullscreen) {
 										output_debug_message( ",fullscreen");
 									}
 									output_debug_message("\n");
 								}
+
+								sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
 												
-								SDL_WM_SetCaption("Maze of Galious v0.63", 0);
 								get_palette();
 							} else {
 								quit = true;
@@ -174,7 +176,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 							SDL_InitSubSystem(SDL_INIT_VIDEO);
 							
 							if (SDL_WasInit(SDL_INIT_VIDEO)) {
-								screen = SDL_SetVideoMode(SCREEN_X, SCREEN_Y, COLOUR_DEPTH, SDL_HWPALETTE|(fullscreen ? SDL_FULLSCREEN : 0));
+								screen = SDL_CreateWindow("Maze of Galious v0.63", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 								
 								if (screen == NULL) {
 									output_debug_message( "Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -185,15 +187,16 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 									quit = true;
 								} else {
 									output_debug_message( "Set the video resolution to: %ix%ix%i",
-										SDL_GetVideoSurface()->w, SDL_GetVideoSurface()->h,
-										SDL_GetVideoSurface()->format->BitsPerPixel);
+										SDL_GetWindowSurface(screen)->w, SDL_GetWindowSurface(screen)->h,
+										SDL_GetWindowSurface(screen)->format->BitsPerPixel);
 									if (fullscreen) {
 										output_debug_message( ",fullscreen");
 									}
 									output_debug_message("\n");
 								}
 												
-								SDL_WM_SetCaption("Maze of Galious v0.63", 0);
+								sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
+												
 								get_palette();
 							} else {
 								quit = true;
@@ -261,8 +264,8 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 
 	
 				// render graphics
-				Render(screen);
-				SDL_Flip(screen);
+				Render(SDL_GetWindowSurface(screen));
+				SDL_RenderPresent(sdlRenderer);
 				
                 act_time = SDL_GetTicks();
                 max_frame_step--;
@@ -284,12 +287,12 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 }
 
 
-SDL_Surface* initializeSDL(int moreflags)
+SDL_Window* initializeSDL(int moreflags)
 {
-	char VideoName[256];
-	SDL_Surface *screen;
+	const char* VideoName = SDL_GetCurrentVideoDriver();
+	SDL_Window *screen;
 
-	int flags = SDL_HWPALETTE|moreflags;
+	int flags = moreflags;
 
 	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0) {
 		return 0;
@@ -301,8 +304,6 @@ SDL_Surface* initializeSDL(int moreflags)
 		output_debug_message( "Couldn't initialize video subsystem: %s\n", SDL_GetError());
 		exit(-1);
 	}
-
-	SDL_VideoDriverName(VideoName, sizeof (VideoName));
 
     output_debug_message( "SDL driver used: %s\n", VideoName);
     // Set the environment variable SDL_VIDEODRIVER to override
@@ -321,7 +322,6 @@ SDL_Surface* initializeSDL(int moreflags)
 
 
 	atexit(SDL_Quit);
-	SDL_WM_SetCaption("Maze of Galious v0.63", 0);
 	
 	if (fullscreen) {
 		SDL_ShowCursor(SDL_DISABLE);
@@ -331,7 +331,7 @@ SDL_Surface* initializeSDL(int moreflags)
 
 	pause(1000);
 
-	screen = SDL_SetVideoMode(SCREEN_X, SCREEN_Y, COLOUR_DEPTH, flags);
+	screen = SDL_CreateWindow("Maze of Galious v0.63", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_X, SCREEN_Y, flags|(fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
 
 	if (screen == NULL) {
 		output_debug_message( "Couldn't set %ix%ix%i", SCREEN_X, SCREEN_Y, COLOUR_DEPTH);
@@ -342,14 +342,16 @@ SDL_Surface* initializeSDL(int moreflags)
 	    exit(-1);
 	} else {
 	    output_debug_message( "Set the video resolution to: %ix%ix%i",
-				 SDL_GetVideoSurface()->w, SDL_GetVideoSurface()->h,
-				 SDL_GetVideoSurface()->format->BitsPerPixel);
+				 SDL_GetWindowSurface(screen)->w, SDL_GetWindowSurface(screen)->h,
+				 SDL_GetWindowSurface(screen)->format->BitsPerPixel);
 	    if (fullscreen) {
 			output_debug_message( ",fullscreen");
 		}
 	    output_debug_message("\n");
     }
 	
+	sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
+												
 	return screen;
 }
 
