@@ -93,7 +93,7 @@ int main(int argc, char** argv)
 	SDL_Event event;
     bool quit = false;
 
-	printf("Starting %s ...\n", MOG_WINDOW_TITLE);
+	printf("Starting %s...\n", MOG_WINDOW_TITLE);
 
 #ifdef __APPLE__
     setupWorkingDirectory();
