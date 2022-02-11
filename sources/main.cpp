@@ -71,6 +71,7 @@ void pause(unsigned int time)
 
 SDL_Window *screen;
 SDL_Renderer *sdlRenderer;
+SDL_Texture *sdlTexture;
 
 void Render(SDL_Surface *surface);
 SDL_Window* initializeSDL(int flags);
@@ -174,6 +175,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 								}
 
 								sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
+								sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
 												
 								get_palette();
 							} else {
@@ -210,6 +212,7 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 								}
 												
 								sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
+								sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
 												
 								get_palette();
 							} else {
@@ -279,6 +282,9 @@ FIXME: the code below is a big copy/paste; it should be in a separate function i
 	
 				// render graphics
 				Render(SDL_GetWindowSurface(screen));
+				SDL_UpdateTexture(sdlTexture, NULL, SDL_GetWindowSurface(screen)->pixels, SCREEN_X * sizeof(Uint32));
+				SDL_RenderClear(sdlRenderer);
+				SDL_RenderCopy(sdlRenderer, sdlTexture, NULL, NULL);
 				SDL_RenderPresent(sdlRenderer);
 				
                 act_time = SDL_GetTicks();
@@ -382,6 +388,7 @@ SDL_Window* initializeSDL(int moreflags)
     }
 	
 	sdlRenderer = SDL_CreateRenderer(screen, -1, 0);
+	sdlTexture = SDL_CreateTexture(sdlRenderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_X, SCREEN_Y);
 												
 	return screen;
 }
