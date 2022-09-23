@@ -61,7 +61,7 @@ if (APPLE)
 endif()
 
 find_package(SDL REQUIRED)
-if(SDL_VERSION_PATCH GREATER 16)
+if(SDL_VERSION_PATCH GREATER_EQUAL 50)
 	set(USE_SDL12_COMPAT 1)
 	find_package(SDL2 REQUIRED)
 endif()
