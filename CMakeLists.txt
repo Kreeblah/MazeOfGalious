@@ -61,6 +61,7 @@ if (APPLE)
 endif()
 
 find_package(SDL REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(SDL_image REQUIRED)
 find_package(SDL_mixer REQUIRED)
 find_package(SDL_sound REQUIRED)
