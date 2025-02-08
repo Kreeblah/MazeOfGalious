@@ -81,12 +81,15 @@ override this selectionor set the CMake environment CMAKE_INCLUDE_PATH
 to modify the search paths.
 #]=======================================================================]
 
+include(FindHomebrew)
+
 set(SDL_SOUND_EXTRAS "" CACHE STRING "SDL_sound extra flags")
 mark_as_advanced(SDL_SOUND_EXTRAS)
 
 # Find SDL_sound.h
 find_path(SDL_SOUND_INCLUDE_DIR SDL_sound.h
   HINTS
+    ${HOMEBREW_PREFIX}/Cellar/sdl_sound/1.0.4-HEAD
     ENV SDLSOUNDDIR
     ENV SDLDIR
   PATH_SUFFIXES SDL
@@ -97,6 +100,7 @@ find_path(SDL_SOUND_INCLUDE_DIR SDL_sound.h
 find_library(SDL_SOUND_LIBRARY
   NAMES SDL_sound
   HINTS
+    ${HOMEBREW_PREFIX}/Cellar/sdl_sound/1.0.4-HEAD
     ENV SDLSOUNDDIR
     ENV SDLDIR
   PATH_SUFFIXES lib VisualC/win32lib
